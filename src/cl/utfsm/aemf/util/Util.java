@@ -1,4 +1,4 @@
-package cl.utfsm.monitoringframework.util;
+package cl.utfsm.aemf.util;
 
 /**
  * Util Class: Privides a set of numerous static utilities

@@ -11,9 +11,9 @@ import java.util.List;
 public class BehaviorState {
 
 	
-	private int id;						// some ID to identify this state
-	private int level;					// the level of the state (info, error, debug, etc)
-	private String application_owner;	// the application name that can cause the event
+	private int id;						// Some ID to identify this state
+	private int level;					// The level of the state (info, error, debug, etc)
+	private String application_owner;	// The application name that can cause the event
 	
 	/**
 	 * TODO Especificar más campos

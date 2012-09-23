@@ -1,6 +1,6 @@
 package cl.utfsm.aemf.util;
 
-import cl.utfsm.aemf.behaviorStates.BehaviorState;
+import cl.utfsm.aemf.behaviormanager.BehaviorState;
 
 public class Parser {
 	

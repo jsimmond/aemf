@@ -20,13 +20,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name="cl.utfsm.aemf.behaviorListener.BehaviorListenerService">
+        <receiver android:name="cl.utfsm.aemf.behaviormanagerListener.BehaviorListenerService">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
                 <category android:name="android.intent.category.HOME"></category>
             </intent-filter>
         </receiver>
-        <service android:name="cl.utfsm.aemf.behaviorListener.BehaviorListenerService">
+        <service android:name="cl.utfsm.aemf.behaviormanagerListener.BehaviorListenerService">
             <intent-filter>
                 <action android:name="cl.utfsm.aemf.behaviorListener.BehaviorListenerService"></action>
             </intent-filter>

@@ -3,7 +3,7 @@ package act;
 import java.util.ArrayList;
 import java.util.Timer;
 
-import cl.utfsm.aemf.behaviorListener.BehaviorListenerService;
+import cl.utfsm.aemf.BehaviorService;
 import cl.utfsm.aemf.behaviorfile.BehaviorFile;
 import cl.utfsm.aemf.behaviormanager.BehaviorAutomaton;
 import cl.utfsm.aemf.behaviormanager.BehaviorState;
@@ -17,7 +17,7 @@ import android.os.Bundle;
 
 public class MainActivity extends Activity {
 
-	private BehaviorListenerService ListenerService;
+	private BehaviorService ListenerService;
 	private Timer timer = new Timer();
 
 	// Lista de eventos

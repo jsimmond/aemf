@@ -34,7 +34,7 @@ public class BehaviorFile {
 	 * Constructor
 	 * @throws Exception 
 	 */
-	public BehaviorFile() throws Exception
+	public BehaviorFile() throws IOException
 	{
 		// First, check if the behavior files directory exists
 		behaviorFilesDirectory = new File(Globals.AEMF_SOURCE_FILES_DIRECTORY);
@@ -75,10 +75,16 @@ public class BehaviorFile {
 			}
 		}
 		
-		
 		return automatonList;
 	}
 
+	/**
+	 * Reads one .jff file and generates the respect BehaviorAutomaton object
+	 * @param f
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 * @throws IOException
+	 */
 	private void parseAutomaton(File f) throws ParserConfigurationException, SAXException, IOException {
 		
 		// Basic SAX parser
@@ -88,7 +94,7 @@ public class BehaviorFile {
 		// Implements a generic DefaultHandler to handle (doh!) the file reading
 		DefaultHandler documentHandler = new DefaultHandler()
 		{ 
-			
+			BehaviorAutomaton automaton;
 			BehaviorState state;
 			BehaviorTransition transition;
 			
@@ -103,9 +109,9 @@ public class BehaviorFile {
 			boolean readRead  = false;
 			
 			public void startDocument(){
-				automatonList.add(new BehaviorAutomaton());	
+				// before start to reading the .jff file, create a new void automaton object
+				automaton = new BehaviorAutomaton();
 			}
-			
 			
 			// Receive notification of the start of an element
 			public void startElement(String uri, String localName, String qName, Attributes attributes) {
@@ -180,7 +186,7 @@ public class BehaviorFile {
 				}
 				if(readTransition && readTo) {
 					int index = Integer.parseInt(new String(ch, start, length));
-					BehaviorState newState = automatonList.get(automatonList.size() - 1).getStates().get(index);
+					BehaviorState newState = automaton.getStates().get(index);
 					transition.setToState(newState);
 					
 					readTo = false;
@@ -201,18 +207,19 @@ public class BehaviorFile {
 					if(state.getStateType() != BehaviorState.INITIAL_STATE && state.getStateType() != BehaviorState.FINAL_STATE)
 						state.setStateType(BehaviorState.INTERMEDIATE_STATE);
 					
-					//Add this state to statesList of the automatonList
-					automatonList.get(automatonList.size() - 1).addState(state);
+					//Add this state to the new automaton 
+					automaton.addState(state);
 				}
 				if(qName.equalsIgnoreCase("transition")) {
 					// End Reading a state
-					automatonList.get(automatonList.size() - 1).getStates().get(transition.getFromState()).addTransition(transition);
+					automaton.getStates().get(transition.getFromState()).addTransition(transition);
 					readTransition = false;
 				}
 			}
 			
 			public void endDocument(){
-				
+				// Add the automaton
+				automatonList.add(automaton);	
 			}
 			
 		};

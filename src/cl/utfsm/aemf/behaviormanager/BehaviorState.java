@@ -1,12 +1,11 @@
 package cl.utfsm.aemf.behaviormanager;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class define an state as expected (or not) under a certain behavior. This
  * class can be the parent of other classes.
- * @author sebastian
+ * @author Sebastián Vásquez Morales
  *
  */
 public class BehaviorState {
@@ -33,20 +32,21 @@ public class BehaviorState {
 	}
 	
 	
+	public void addTransition(BehaviorTransition transition) {
+		// TODO Auto-generated method stub
+		this.transitions.add(transition);
+	}
 	
-	
-	
+	public ArrayList<BehaviorTransition> getTransitions(){
+		return transitions;
+	}
+
 	/**
 	 * GETTERS AND SETTERS
 	 */
 	public int getStateType() {
 		return stateType;
 	}
-
-
-
-
-
 
 	public int getId() {
 		return id;
@@ -56,22 +56,12 @@ public class BehaviorState {
 		this.id = id;
 	}
 
-
-
-
-
-
 	public void setName(String name) {
 		this.name = name;
 	}
 	public String getName() {
 		return this.name;
 	}
-
-
-
-
-
 
 	public void setLabel(String label) {
 		this.label = label;
@@ -82,28 +72,9 @@ public class BehaviorState {
 		
 	}
 
-
-
-
-
-
 	public void setStateType(int stateType) {
 		this.stateType = stateType;
 		
 	}
-
-
-
-
-
-
-	public void addTransition(BehaviorTransition transition) {
-		// TODO Auto-generated method stub
-		this.transitions.add(transition);
-	}
-	public ArrayList<BehaviorTransition> getTransitions(){
-		return transitions;
-	}
-	 
-
+	
 } 

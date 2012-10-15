@@ -22,8 +22,13 @@ public class Globals {
 	public static final String APPLICATION_TAG = "AEMF";
 	public static final String ERROR_AT_READ_LOG = "an error occurred while AEMF reading the buffer log";
 	
-	//Specific source paths
-	public static final String AEMF_SOURCE_FILES_DIRECTORY = Environment.getExternalStorageDirectory().getAbsolutePath() + "/AEMF_files";	//points to /mnt/sdcard/AEMF_files/
+	// Specific source paths
+	public static final String AEMF_SOURCE_FILES_DIRECTORY = Environment.getExternalStorageDirectory().getAbsolutePath() + "/AEMF_files/";	//points to /mnt/sdcard/AEMF_files/
+	
+	// The application to be monitored
+	public static String APPLICATION_ID_TO_BE_MONITORED = "cl.vasquez.MainPackage";
+	public static int PROCESS_ID_TO_BE_MONITORED = 0;
+	
 	
 	
 }

@@ -1,12 +1,11 @@
-package cl.utfsm.aemf.behaviorlistener;
+package cl.utfsm.aemf;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import android.util.Log;
-import cl.utfsm.aemf.behaviormanager.BehaviorManager;
-import cl.utfsm.aemf.event.Event;
-import cl.utfsm.aemf.eventstrategy.EventContext;
+import cl.utfsm.aemf.event.EventParser;
+import cl.utfsm.aemf.manager.BehaviorManager;
 import cl.utfsm.aemf.util.Globals;
 
 /**
@@ -18,7 +17,7 @@ public class BehaviorListener implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		
 		try {
 
 			String line = "";
@@ -34,20 +33,15 @@ public class BehaviorListener implements Runnable {
 
 			// This while read each new line on the buffer
 			while ((line = br.readLine()) != null) {
-
-				EventContext logcat_event = new EventContext(line);
-				
-				// If the event is defined, then compare with the automatons
-				if(logcat_event.eventIsDefined()) {
-					Event event = logcat_event.getEvent();
-					
-					// Process the event with BehaviorManager
-					BehaviorManager.processEvent(event);
-				}
+				try{
+					EventParser logcat_event = new EventParser(line);
+					if(logcat_event.getEvent() != null)
+						BehaviorManager.processEvent(logcat_event.getEvent());
+				}catch(Exception e){}
 			}
 		} catch (Exception e) {
 			// Error occurred while reading the buffer log
-			Log.e(Globals.APPLICATION_TAG, Globals.ERROR_AT_READ_LOG);
+			Log.e(Globals.APPLICATION_TAG, Globals.ERROR_AT_READ_LOG+": " + e.getMessage());
 		}
 
 	}

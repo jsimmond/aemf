@@ -11,7 +11,7 @@ public class ServicesListened {
 	
 	
 	// The List of the Android Services to be monitored
-	public static final String servicesArrayListened[] =
+	public static final String tagArrayListened[] =
 			{ 
 				ACTIVITY_MANAGER,
 				INPUT_READER,

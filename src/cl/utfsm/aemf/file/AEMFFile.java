@@ -12,21 +12,18 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import android.util.Log;
 
-import cl.utfsm.aemf.util.Globals;
+import cl.utfsm.aemf.util.AEMFConfiguration;
 
 public abstract class AEMFFile {
 
-	/**
-	 * @uml.property  name="filesDirectory"
-	 */
 	private File filesDirectory;
 	private String path;
-	/**
-	 * @uml.property  name="documentHandler"
-	 * @uml.associationEnd  
-	 */
 	private DefaultHandler documentHandler;
 	
+	// Quantity of automatons monitoring 
+	public static int AUTOMATON_ID = 0;
+	// Quantity of automatons monitoring 
+	public static String AUTOMATON_FILENAME = "";
 	
 	/**
 	 * Constructor
@@ -36,11 +33,11 @@ public abstract class AEMFFile {
 	public AEMFFile() throws IOException
 	{
 		// First, check if the behavior files directory exists
-		setFilesDirectory(new File(Globals.AEMF_SOURCE_FILES_DIRECTORY));
+		setFilesDirectory(new File(AEMFConfiguration.AEMF_SOURCE_FILES_DIRECTORY));
 		
 		// If this directory does not exist, then abort all
 		if(!this.getFilesDirectory().exists()) {
-			throw new IOException("["+this.getFilesDirectory().getAbsolutePath()+"] " + Globals.BEHAVIOR_DIRECTORY_DOES_NOT_EXIST);
+			throw new IOException("["+this.getFilesDirectory().getAbsolutePath()+"] " + AEMFConfiguration.BEHAVIOR_DIRECTORY_DOES_NOT_EXIST);
 		}
 	}
 	
@@ -49,17 +46,19 @@ public abstract class AEMFFile {
 	 */
 	protected void parseFiles(String allowedExtension) {
 		// Get all files from /AEMF_files
-		File files[] = new File(Globals.AEMF_SOURCE_FILES_DIRECTORY + path).listFiles();
+		File files[] = new File(AEMFConfiguration.AEMF_SOURCE_FILES_DIRECTORY + path).listFiles();
 		
-		Log.i(Globals.APPLICATION_TAG, "Starting reading files, "+files.length+" file(s) found.");
+		Log.i(AEMFConfiguration.APPLICATION_TAG, "Starting reading files, "+files.length+" file(s) found.");
 		for(File f : files)
 		{
 			if(!f.getName().contains(allowedExtension))
 				continue;
 			
-			Log.i(Globals.APPLICATION_TAG, "Reading " + f.getName());
+			Log.i(AEMFConfiguration.APPLICATION_TAG, "Reading " + f.getName());
 			try {
+				AEMFFile.AUTOMATON_FILENAME = f.getName();
 				parseFile(f);
+				AEMFFile.AUTOMATON_ID++;
 				
 			} catch (ParserConfigurationException e) {
 				e.printStackTrace();
@@ -86,6 +85,7 @@ public abstract class AEMFFile {
 		SAXParser parser = factory.newSAXParser();
 	
 		parser.parse(f, getDocumentHandler());
+		
 	}
 	
 	/*

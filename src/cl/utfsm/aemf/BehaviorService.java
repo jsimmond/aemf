@@ -1,18 +1,18 @@
 package cl.utfsm.aemf;
 
-import cl.utfsm.aemf.automaton.Symbol;
 import cl.utfsm.aemf.file.AlphabetFile;
 import cl.utfsm.aemf.file.BehaviorFile;
 import cl.utfsm.aemf.file.TokenFile;
+import cl.utfsm.aemf.logger.AEMFLogger;
 import cl.utfsm.aemf.manager.BehaviorManager;
-import cl.utfsm.aemf.util.Globals;
+import cl.utfsm.aemf.util.AEMFConfiguration;
 import cl.utfsm.aemf.util.Util;
 
 import android.app.IntentService;
 import android.content.Intent;
 
 /**
- * I chose to use a IntentService because this is the best recommended
+ * Use a IntentService because this is the best recommended
  * alternative against Service class. This service based on IntentService don't
  * need to handle multiple requests simultaneously.
  * 
@@ -37,9 +37,12 @@ public class BehaviorService extends IntentService {
 	public void onCreate() {
 		super.onCreate();
 		
-		Util.getProcessId(Globals.APPLICATION_ID_TO_BE_MONITORED);
-
-	
+		// try to get the PID of monitored application
+		Util.getProcessId(AEMFConfiguration.APPLICATION_ID_TO_BE_MONITORED);
+		
+		// opens a stream to AEMF log file
+		AEMFLogger.openNewStream(AEMFConfiguration.AEMF_SOURCE_FILES_DIRECTORY + "log.txt");
+		AEMFLogger.writeInfo("Starting new session of AEMF");
 		/*
 		 * First of all, we need the read the configurations file,
 		 * it can be done by the BehaviorFile class
@@ -57,10 +60,9 @@ public class BehaviorService extends IntentService {
 			BehaviorManager.automatonList = bf.getAutomatonList();
 			BehaviorManager.symbolList 	  = af.getSymbolList();
 			BehaviorManager.tokenList 	  = tf.getTokenList();
-		
-			for(Symbol s : BehaviorManager.symbolList){
-				s.printSymbol();
-			}
+			
+			AEMFLogger.write("There are " + BehaviorManager.automatonList.size() + " automatons to be monitored");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -68,9 +70,14 @@ public class BehaviorService extends IntentService {
 		// First thread, define a Thread that reads the logs
 		Thread listenerThread = new Thread(new BehaviorListener());
 
-		// The thread will executes this task until the service will be
-		// destroyed
+		// The thread will executes this task
 		listenerThread.start();
+		AEMFLogger.write("Listener service started");
+		
+		// ... until the service will be destroyed
+		AEMFLogger.write("Stopped instance of AEMF, service destroyed.");
+		
+		
 
 	}
 
@@ -86,9 +93,6 @@ public class BehaviorService extends IntentService {
 	 */
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		// Normally we would do some work here, like download a file.
-		// For our sample, we just sleep for 5 seconds.
 		return;
 	}
-
 }

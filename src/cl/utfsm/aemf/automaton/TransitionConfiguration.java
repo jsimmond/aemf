@@ -3,16 +3,18 @@ package cl.utfsm.aemf.automaton;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class TransitionParameters {
+public class TransitionConfiguration {
 
 	private String transitionId;
 	private HashMap<String, ArrayList<String>> hp;
+	private int PID;
 	
 	/**
 	 * Constructor
 	 */
-	public TransitionParameters() {
+	public TransitionConfiguration() {
 		hp = new HashMap<String, ArrayList<String>>();
+		PID = -1;
 	}
 
 	/**
@@ -49,6 +51,15 @@ public class TransitionParameters {
 			s.add(value);
 			hp.put(key, s);
 		}
+	}
+
+	public void setPID(int pid) {
+		// TODO Auto-generated method stub
+		this.PID = pid;
+	}
+	
+	public int getPID(){
+		return PID;
 	}
 	
 	

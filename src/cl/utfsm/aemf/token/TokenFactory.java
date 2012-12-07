@@ -9,7 +9,7 @@ public class TokenFactory {
 	 * @return
 	 * @throws BadTokenException 
 	 */
-	public static TokenManager createTokenizer(String tokenType) throws BadTokenException{
+	public static TextTokenizer createTokenizer(String tokenType) throws BadTokenException{
 		
 		if(tokenType.equalsIgnoreCase("dummy")){
 			return new DummyTextTokenizer();
@@ -19,6 +19,12 @@ public class TokenFactory {
 		}
 		else if(tokenType.equalsIgnoreCase("activity")){
 			return new ActivityTextTokenizer();
+		}
+		else if(tokenType.equalsIgnoreCase("simple")){
+			return new SimpleTextTokenizer();
+		}
+		else if(tokenType.equalsIgnoreCase("process_id")){
+			return new ProcessIdTextTokenizer();
 		}
 		else {
 			throw new BadTokenException();

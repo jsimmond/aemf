@@ -1,4 +1,4 @@
-package cl.utfsm.aemf.event;
+package cl.utfsm.aemf.textevent;
 
 import cl.utfsm.aemf.util.ServicesListened;
 
@@ -8,17 +8,17 @@ import cl.utfsm.aemf.util.ServicesListened;
  * @author sebastian
  */
 
-public class EventParser {
+public class TextEventParser {
 
 	// This object TODO explicar estoooo
 	/**
 	 * @uml.property  name="event"
 	 * @uml.associationEnd  
 	 */
-	Event event;
+	TextEvent event;
 	
 	// Constructor
-	public EventParser(String line) {
+	public TextEventParser(String line) {
 		// Create the event object
 		parseEvent(line);
 	}
@@ -40,7 +40,7 @@ public class EventParser {
 			// If it was found
 			if(match_service != -1) {
 				//returns 09-23 20:51:48.439   162   192 I ActivityManager: [Displayed cl.vasquez.MainPackage/.CuponListViewActivity: +449ms]
-				event = new Event();
+				event = new TextEvent();
 				if(getTime_Date_Level_Application(event_log.split(ServicesListened.tagArrayListened[i]+": ")[0])){
 					event.setTag(ServicesListened.tagArrayListened[i]);
 					event.setText(event_log.split(ServicesListened.tagArrayListened[i]+": ")[1]);
@@ -87,7 +87,7 @@ public class EventParser {
 	 * Getters and setters
 	 * @uml.property  name="event"
 	 */
-	public Event getEvent(){
+	public TextEvent getEvent(){
 		return event;
 	}
 

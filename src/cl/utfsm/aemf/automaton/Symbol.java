@@ -1,10 +1,9 @@
 package cl.utfsm.aemf.automaton;
 
 import java.util.ArrayList;
-import java.util.Map.Entry;
 
 import android.util.Log;
-import cl.utfsm.aemf.util.Globals;
+import cl.utfsm.aemf.util.AEMFConfiguration;
 
 public class Symbol {
 	
@@ -13,13 +12,15 @@ public class Symbol {
 	private int 	level;
 	private String 	tag;
 	private String 	text;
-	private TransitionParameters params;
+	private ArrayList<String> params;
+	private boolean requirePID = false;
 	
 	/**
 	 * Constructor
 	 */
 	public Symbol(){
-		params = new TransitionParameters();
+		params = new ArrayList<String>();
+
 	}
 	
 	/*
@@ -31,6 +32,11 @@ public class Symbol {
 	
 	public void setId(String id) {
 		this.id = id;
+		
+		// Put here if the token read require a PID
+		if(id.equals("start_intent")){
+			requirePID = true;
+		}
 	}
 	
 	public int getLevel() {
@@ -57,26 +63,26 @@ public class Symbol {
 		this.text = text;
 	}
 	
-	public void setTransiitionParameters(TransitionParameters tp) {
+	public void setParameters(ArrayList<String> tp) {
 		this.params = tp;
+	}
+	
+	public boolean isPIDRequired(){
+		return requirePID;
 	}
 	
 	
 	// For debugging
 	public void printSymbol(){
-		Log.i(Globals.APPLICATION_TAG+" - Symbol reading", "SYMBOL");
-		Log.i(Globals.APPLICATION_TAG+" - Symbol reading", "> id: " + this.getId());
-		Log.i(Globals.APPLICATION_TAG+" - Symbol reading", "> tag: " + this.getTag());
-		Log.i(Globals.APPLICATION_TAG+" - Symbol reading", "> text: " + this.getText());
-		Log.i(Globals.APPLICATION_TAG+" - Symbol reading", "> params: ");
-		for(Entry<String, ArrayList<String>> s : params.getHashMap().entrySet()){
-			for(String val : s.getValue()){
-				Log.i(Globals.APPLICATION_TAG+" - Symbol reading", "> > " + s.getKey() +" : "+ val);
+		Log.i(AEMFConfiguration.APPLICATION_TAG+" - Symbol reading", "SYMBOL");
+		Log.i(AEMFConfiguration.APPLICATION_TAG+" - Symbol reading", "> id: " + this.getId());
+		Log.i(AEMFConfiguration.APPLICATION_TAG+" - Symbol reading", "> tag: " + this.getTag());
+		Log.i(AEMFConfiguration.APPLICATION_TAG+" - Symbol reading", "> text: " + this.getText());
+		Log.i(AEMFConfiguration.APPLICATION_TAG+" - Symbol reading", "> params: ");
+			for(String val : params){
+				Log.i(AEMFConfiguration.APPLICATION_TAG+" - Symbol reading", "> > " + val);
 			}
 			
-
-		}
-		
 	}
 	
 

@@ -8,7 +8,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import cl.utfsm.aemf.automaton.Symbol;
-import cl.utfsm.aemf.automaton.TransitionParameters;
 
 
 /**
@@ -53,10 +52,7 @@ public class AlphabetFile extends AEMFFile {
 			
 			// The Symbol object
 			Symbol symbol;
-			TransitionParameters tp;
-			
-			// Temp variables
-			String tempType = "";
+			ArrayList<String> tp;
 			
 			public void startDocument(){
 			}
@@ -66,7 +62,7 @@ public class AlphabetFile extends AEMFFile {
 				if(qName.equalsIgnoreCase("transition")){
 					readTransition = true;
 					symbol = new Symbol();
-					tp = new TransitionParameters();
+					tp = new ArrayList<String>();
 				}
 	
 				else if(qName.equalsIgnoreCase("id")){
@@ -75,7 +71,6 @@ public class AlphabetFile extends AEMFFile {
 				
 				else if(qName.equalsIgnoreCase("param")){
 					readParam = true;
-					tempType = attributes.getValue(0);
 				}
 				
 				else if(qName.equalsIgnoreCase("tag")){
@@ -98,7 +93,7 @@ public class AlphabetFile extends AEMFFile {
 						readId = false;
 					}
 					else if(readParam){
-						tp.addParameter(new String(ch, start, length), tempType);
+						tp.add(new String(ch, start, length));
 						readParam = false;
 					}
 					
@@ -120,7 +115,7 @@ public class AlphabetFile extends AEMFFile {
 			public void endElement(String uri, String localName, String qName){
 				
 				if(qName.equalsIgnoreCase("transition")) {
-					symbol.setTransiitionParameters(tp);
+					symbol.setParameters(tp);
 					alphabet.add(symbol);
 					readTransition = false;
 				}

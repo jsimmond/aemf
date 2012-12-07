@@ -2,7 +2,7 @@ package cl.utfsm.aemf.token;
 
 import cl.utfsm.aemf.manager.BehaviorManager;
 
-public class ActivityTextTokenizer extends TokenManager {
+public class ActivityTextTokenizer extends TextTokenizer {
 
 	@Override
 	public boolean isAccepted() {
@@ -11,12 +11,12 @@ public class ActivityTextTokenizer extends TokenManager {
 			if(eventText.contains(s))
 			{
 				valueMatched = s;
-				this.CURRENT_STATE = TokenManager.MATCH_FOUND;
+				this.CURRENT_STATE = TextTokenizer.MATCH_FOUND;
 				return true;
 			}
 		}
 		
-		this.CURRENT_STATE = TokenManager.MATCH_NOT_FOUND;
+		this.CURRENT_STATE = TextTokenizer.MATCH_NOT_FOUND;
 		
 		return false;
 		

@@ -1,6 +1,6 @@
 package cl.utfsm.aemf.token;
 
-public class DummyTextTokenizer extends TokenManager {
+public class DummyTextTokenizer extends TextTokenizer {
 
 	@Override
 	public boolean isAccepted() {

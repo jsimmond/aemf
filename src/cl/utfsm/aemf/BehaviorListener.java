@@ -4,9 +4,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import android.util.Log;
-import cl.utfsm.aemf.event.EventParser;
+import cl.utfsm.aemf.logger.AEMFLogger;
 import cl.utfsm.aemf.manager.BehaviorManager;
-import cl.utfsm.aemf.util.Globals;
+import cl.utfsm.aemf.textevent.TextEventParser;
+import cl.utfsm.aemf.util.AEMFConfiguration;
 
 /**
  * This class implements the Runnable interface. It reads de circular log for events
@@ -15,13 +16,17 @@ import cl.utfsm.aemf.util.Globals;
  */
 public class BehaviorListener implements Runnable {
 
+	// Necessary synchronization token
+	private static boolean syncToken = false;
+	
 	@Override
 	public void run() {
 		
 		try {
-
-			String line = "";
-
+			BehaviorListener.syncToken = true;
+			
+			String line = "";			
+			
 			// First, we need to clear the buffer logs to begin reads
 			Runtime.getRuntime().exec("logcat -c");
 
@@ -33,17 +38,46 @@ public class BehaviorListener implements Runnable {
 
 			// This while read each new line on the buffer
 			while ((line = br.readLine()) != null) {
+
 				try{
-					EventParser logcat_event = new EventParser(line);
-					if(logcat_event.getEvent() != null)
-						BehaviorManager.processEvent(logcat_event.getEvent());
-				}catch(Exception e){}
+					if(!syncToken){
+						AEMFLogger.writeInfo("Listener services stopped unexpectedly.");
+						this.finalize();
+					}
+					
+					TextEventParser logcat_event = new TextEventParser(line);
+					if(logcat_event.getEvent() != null){
+						if(BehaviorManager.processEvent(logcat_event.getEvent()))
+						{
+							syncToken = false;
+							this.finalize();
+						}
+					}
+							
+				}
+				catch (Throwable e) {
+					e.printStackTrace();
+				}
+				
+
 			}
 		} catch (Exception e) {
 			// Error occurred while reading the buffer log
-			Log.e(Globals.APPLICATION_TAG, Globals.ERROR_AT_READ_LOG+": " + e.getMessage());
+			AEMFLogger.writeInfo("Error desconocido");
+			Log.e(AEMFConfiguration.APPLICATION_TAG, AEMFConfiguration.ERROR_AT_READ_LOG+": " + e.getMessage());
 		}
 
+	}
+
+	public static void stop() {
+		// TODO Auto-generated method stub
+		BehaviorListener.syncToken = false;
+		AEMFLogger.writeInfo("Freeing resources...");
+	}
+
+	public static boolean isRunning() {
+		// TODO Auto-generated method stub
+		return syncToken;
 	}
 
 }

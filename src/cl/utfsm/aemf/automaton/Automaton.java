@@ -1,6 +1,9 @@
 package cl.utfsm.aemf.automaton;
 
 import java.util.ArrayList;
+import java.util.Map.Entry;
+
+import cl.utfsm.aemf.logger.AEMFLogger;
 
 
 /**
@@ -10,25 +13,36 @@ import java.util.ArrayList;
  */
 public class Automaton {
 
-	ArrayList<State> states = new ArrayList<State>();
+	private int id;
+	private String fileName;
 	private State currentState;
+	private ArrayList<State> states = new ArrayList<State>();
+	
+	
+	
 	
 	
 	/**
 	 * Process the event given and change the actual state if the event is accepted as a transition
 	 * @param event
 	 */
-	public boolean processTransition(String symbolId, TransitionParameters parameters) {
+	public boolean processTransitionParameters(TransitionConfiguration parameters) {
 		
-		/**
-		 * TODO Implementar 
-		 */
-		System.out.println("currentstateTransitions: " + currentState.getId());
+		
+		AEMFLogger.write("Current state of the automaton "+currentState.getId()+": " + currentState.getName());
+		// For each transition, verify his configuration
 		for(Transition t : currentState.getTransitions()){
-			System.out.println(" -> " + t.getSymbolText());
+			State nextState;
+			if((nextState = t.getNextStateGivenConfiguration(parameters)) != null){
+							
+				AEMFLogger.write("Automaton " + getId() + " ("+getFileName()+") changed to state from " +currentState.getId()+" to "+nextState.getId() );
+				
+				// Change the current state to next
+				currentState = nextState;
+				break;
+			}
 		}
-		System.out.println("processTransition: " + symbolId);
-		//System.out.println("processTransition: " + parameters.getTransitionId() );
+		
 		return false;
 	}
 	
@@ -40,12 +54,15 @@ public class Automaton {
 	 * Set the initial state
 	 * @return
 	 */
-	public State setInitialState(){
+	public void setInitialState(){
 		for(State s : states){
-			if(s.getStateType() == State.INITIAL_STATE)
-				return s;
+			if(s.getStateType() == State.INITIAL_STATE) {
+				currentState = s;
+				return;
+			}
 		}
-		return states.get(0);
+		currentState = states.get(0);
+		return;
 	}
 	
 
@@ -54,10 +71,7 @@ public class Automaton {
 	 * @return
 	 */
 	public boolean isFinished() {
-		if ( currentState.getStateType() == State.FINAL_STATE) {
-			return true;
-		}
-		return false;
+		return currentState.getStateType() == State.FINAL_STATE;
 	}
 
 	/**
@@ -81,9 +95,40 @@ public class Automaton {
 		for(State state : states){
 			System.out.println("State " + state.getId() + "(type:"+state.getStateType()+"):");
 			for(Transition transition : state.getTransitions()){
-				System.out.println("-> Transition from "+transition.getFromState() + " to " + transition.getToState().getId() + " - " + transition.getSymbolText());
+				System.out.println("Transition id: " + transition.getParameters().getTransitionId());
+				System.out.println("-> Transition from "+transition.getFromState() + " to " + transition.getToState().getId());
+				System.out.println("-> Parameters:");
+				for(Entry<String, ArrayList<String>> entry : transition.getParameters().getHashMap().entrySet()){
+					for(String val : entry.getValue()){
+						System.out.println("--> " + entry.getKey() + " : " + val);
+					}
+				}
 			}
 		}
+	}
+
+	/*
+	 * Getters and setters
+	 */
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String filename) {
+		this.fileName = filename;
+	}
+	
+	public State getCurrentState(){
+		return currentState;
 	}
 	
 	

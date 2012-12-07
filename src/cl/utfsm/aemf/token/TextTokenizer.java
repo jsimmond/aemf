@@ -1,6 +1,6 @@
 package cl.utfsm.aemf.token;
 
-public abstract class TokenManager {
+public abstract class TextTokenizer {
 	
 	public String eventText;
 	public int CURRENT_STATE = SEARCHING_VALUE;

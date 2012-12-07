@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cl.utfsm.aemf.automaton.TransitionParameters;
+import cl.utfsm.aemf.automaton.Symbol;
+import cl.utfsm.aemf.automaton.TransitionConfiguration;
+import cl.utfsm.aemf.logger.AEMFLogger;
 import cl.utfsm.aemf.token.BadTokenException;
 import cl.utfsm.aemf.token.DummyTextTokenizer;
+import cl.utfsm.aemf.token.ProcessIdTextTokenizer;
 import cl.utfsm.aemf.token.TokenFactory;
-import cl.utfsm.aemf.token.TokenManager;
+import cl.utfsm.aemf.token.TextTokenizer;
 
 /**
  * This class compare a Event Object reader by the BehaviorListener with
@@ -26,25 +29,25 @@ public class Inspector {
 	 * @throws BadTokenException 
 	 * @throws Exception
 	 */
-	public static TransitionParameters getTransitionFromEvent(String eventText, String symbolText) throws BadTokenException{
+	public static TransitionConfiguration getTransitionFromEvent(String eventText, Symbol symbol) throws BadTokenException{
 		
-		System.out.println(">>"+eventText);
-		System.out.println(">>"+symbolText);
-
+		AEMFLogger.writeInfo("TransitionConfiguration getTransitionFromEvent: " + symbol.getId());
+		
 		// This object will be filled with data
 		// while the string analysis is performed.
 		// This data will help to make the correspondent 
 		// transitions to each automatons.
-		TransitionParameters transition = new TransitionParameters();
+		TransitionConfiguration transition = new TransitionConfiguration();
 		
 		boolean withToken = false;	//Flag to determinate if the inspector is inside a "{% ... %}" string
 		boolean usingDummyToken = false;
 		
 		String eventArray[]  = eventText.split(" ");
-		String symbolArray[] = symbolText.split(" ");
+		String symbolArray[] = symbol.getText().split(" ");
 		
 		// Process all the String
 		int i = 0, j = 0;
+		
 		while(i < eventArray.length){
 			
 			if(eventArray[i].equals(symbolArray[j])){
@@ -58,30 +61,40 @@ public class Inspector {
 			// eventArray[j]  is a string
 			if(isToken(symbolArray[j]))
 			{
+				
 				withToken = true;
 				ArrayList<String> list = getTokens(symbolArray[j]);
 				for(String token : list){
 					// Generate the manager
-					TokenManager tokenManager = TokenFactory.createTokenizer(token);
+					TextTokenizer tokenManager = TokenFactory.createTokenizer(token);
 					
 					// While stay inside a token
 					while(withToken){
+						
 						tokenManager.setEventText(eventArray[i]); 
 						
+						// The dummy token can consume more than one string
+						if(tokenManager instanceof DummyTextTokenizer) {
+							usingDummyToken = true;
+							break;
+						}
 						// token is accepted by the automaton?
-						if(tokenManager.isAccepted())
+						else if(tokenManager.isAccepted())
 						{
-							// The dummy token can consume more than one string
-							if(tokenManager instanceof DummyTextTokenizer)
-							{
-								usingDummyToken = true;
+							if(tokenManager instanceof ProcessIdTextTokenizer){
+								usingDummyToken = false;
+								transition.setPID(Integer.parseInt(tokenManager.getValueMatched()));
 							}
 							else{
 								usingDummyToken = false;
+								
+								// Sets the {%token%} and his value
+								transition.addParameter(token, tokenManager.getValueMatched());
+								
+								// Removes the found text and other special characters
+								eventArray[i] = eventArray[i].replace(String.valueOf(tokenManager.getValueMatched()), "");
+								eventArray[i] = eventArray[i].replace("/", "");
 							}
-						
-							// Sets the {%token%} and his value
-							transition.addParameter(token, tokenManager.getValueMatched());	
 							
 							break;
 						}
@@ -95,22 +108,33 @@ public class Inspector {
 							}
 							
 							// If a value was found successful, then continue analizing
-							if(tokenManager.getCurrentState() == TokenManager.MATCH_FOUND)
+							if(tokenManager.getCurrentState() == TextTokenizer.MATCH_FOUND)
 							{
 								continue;
 							}
-							else if(tokenManager.getCurrentState() == TokenManager.MATCH_NOT_FOUND)
+							else if(tokenManager.getCurrentState() == TextTokenizer.MATCH_NOT_FOUND)
 							{
+								if(usingDummyToken) {
+									i++;
+									continue;
+								}
+								
 								return null;
 							}
+							
+						
 						}
 					}
 				}
-				i++;
-				if(j < symbolArray.length)
+				
+				if(j < symbolArray.length - 1)
 					j++;
-				
-				
+				if(!usingDummyToken)
+					i++;
+				else
+					if(i == eventArray.length -1 && j == symbolArray.length -1)
+						break;
+					
 			}
 			else if(usingDummyToken)
 			{
@@ -118,6 +142,7 @@ public class Inspector {
 			}
 			
 		}
+		
 		return transition;
 	}
 	

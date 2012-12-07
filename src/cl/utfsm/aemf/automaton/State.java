@@ -11,26 +11,11 @@ import java.util.ArrayList;
 public class State {
 
 	
-	/**
-	 * @uml.property  name="id"
-	 */
+
 	private int id;						// Some ID to identify this state
-	/**
-	 * @uml.property  name="label"
-	 */
 	private String label;				// 
-	/**
-	 * @uml.property  name="name"
-	 */
 	private String name;				//
-	/**
-	 * @uml.property  name="stateType"
-	 */
 	private int stateType;				//initial, intermediate or final state
-	/**
-	 * @uml.property  name="transitions"
-	 * @uml.associationEnd  multiplicity="(0 -1)" inverse="toState:cl.utfsm.aemf.automaton.Transition"
-	 */
 	private ArrayList<Transition> transitions = new ArrayList<Transition>();
 	
 	// Some static constants
@@ -119,6 +104,12 @@ public class State {
 	 */
 	public void setStateType(int stateType) {
 		this.stateType = stateType;
+		
+	}
+
+
+	public void processParameters(TransitionConfiguration parameters) {
+		// TODO Auto-generated method stub
 		
 	}
 	

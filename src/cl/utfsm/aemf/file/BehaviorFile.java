@@ -3,6 +3,7 @@ package cl.utfsm.aemf.file;
 import cl.utfsm.aemf.automaton.Automaton;
 import cl.utfsm.aemf.automaton.State;
 import cl.utfsm.aemf.automaton.Transition;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -150,7 +151,7 @@ public class BehaviorFile extends AEMFFile {
 					
 					else if(readRead) 
 					{
-						transition.setSymbolText(new String(ch, start, length));
+						transition.config(new String(ch, start, length));
 						readRead = false;
 					}
 					
@@ -180,7 +181,11 @@ public class BehaviorFile extends AEMFFile {
 			public void endDocument(){
 				// Add the automaton
 				automaton.setInitialState();
-				automatonList.add(automaton);	
+				
+				automaton.setId(AEMFFile.AUTOMATON_ID);
+				automaton.setFileName(AEMFFile.AUTOMATON_FILENAME);
+				
+				automatonList.add(automaton);
 			}
 			
 		});

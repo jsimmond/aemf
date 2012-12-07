@@ -1,8 +1,6 @@
 package cl.utfsm.aemf.token;
 
-import cl.utfsm.aemf.manager.BehaviorManager;
-
-public class ApplicationTextTokenizer extends TextTokenizer {
+public class SimpleTextTokenizer extends TextTokenizer {
 
 	@Override
 	public void setEventText(String str) {
@@ -20,18 +18,14 @@ public class ApplicationTextTokenizer extends TextTokenizer {
 	 */
 	@Override
 	public boolean isAccepted() {
-		Token t = BehaviorManager.getTokenById("application");
-		for(String s : t.getValuesAcceptedList()){
-			if(eventText.contains(s))
-			{
-				valueMatched = s;
-				this.CURRENT_STATE = TextTokenizer.MATCH_FOUND;
-				return true;
-			}
-		}
 		
-		this.CURRENT_STATE = TextTokenizer.MATCH_NOT_FOUND;
-		return false;
+		if(!eventText.equals("") || !eventText.contains(" ")) {
+			this.CURRENT_STATE = TextTokenizer.MATCH_FOUND;
+			valueMatched = eventText;
+			return true;
+		}
+		else
+			return false;
 	}
 
 	@Override

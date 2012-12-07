@@ -1,2 +1,2 @@
-aemf
+AEM Framework
 ====

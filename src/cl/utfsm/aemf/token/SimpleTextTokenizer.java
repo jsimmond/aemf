@@ -9,7 +9,6 @@ public class SimpleTextTokenizer extends TextTokenizer {
 
 	@Override
 	public int getCurrentState() {
-		// TODO Auto-generated method stub
 		return CURRENT_STATE;
 	}
 
@@ -17,7 +16,7 @@ public class SimpleTextTokenizer extends TextTokenizer {
 	 * Verify if the eventText matches on this ApplicationToken
 	 */
 	@Override
-	public boolean isAccepted() {
+	public boolean isAccepted(Token t) {
 		
 		if(!eventText.equals("") || !eventText.contains(" ")) {
 			this.CURRENT_STATE = TextTokenizer.MATCH_FOUND;
@@ -30,7 +29,6 @@ public class SimpleTextTokenizer extends TextTokenizer {
 
 	@Override
 	public String getValueMatched() {
-		// TODO Auto-generated method stub
 		return valueMatched;
 	}
 

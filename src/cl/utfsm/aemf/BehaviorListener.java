@@ -70,13 +70,11 @@ public class BehaviorListener implements Runnable {
 	}
 
 	public static void stop() {
-		// TODO Auto-generated method stub
 		BehaviorListener.syncToken = false;
 		AEMFLogger.writeInfo("Freeing resources...");
 	}
 
 	public static boolean isRunning() {
-		// TODO Auto-generated method stub
 		return syncToken;
 	}
 

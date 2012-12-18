@@ -1,8 +1,8 @@
 package cl.utfsm.aemf.file;
 
-import cl.utfsm.aemf.automaton.Automaton;
-import cl.utfsm.aemf.automaton.State;
-import cl.utfsm.aemf.automaton.Transition;
+import cl.utfsm.aemf.automata.Automata;
+import cl.utfsm.aemf.automata.State;
+import cl.utfsm.aemf.automata.Transition;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class BehaviorFile extends AEMFFile {
 	/**
 	 * @uml.property  name="automatonList"
 	 */
-	ArrayList<Automaton> automatonList = new ArrayList<Automaton>();
+	ArrayList<Automata> automatonList = new ArrayList<Automata>();
 	
 	/**
 	 * Constructor
@@ -44,7 +44,7 @@ public class BehaviorFile extends AEMFFile {
 		// Implements a generic DefaultHandler to handle (doh!) the file reading
 		setDocumentHandler(new DefaultHandler()
 		{ 
-			Automaton automaton;
+			Automata automaton;
 			State state;
 			Transition transition;
 			
@@ -60,7 +60,7 @@ public class BehaviorFile extends AEMFFile {
 			
 			public void startDocument(){
 				// before start to reading the .jff file, create a new void automaton object
-				automaton = new Automaton();
+				automaton = new Automata();
 			}
 			
 			// Receive notification of the start of an element
@@ -195,7 +195,7 @@ public class BehaviorFile extends AEMFFile {
 	 * Returns the generated automaton read from source_path file
 	 * @return automaton list
 	 */
-	public ArrayList<Automaton> getAutomatonList() {
+	public ArrayList<Automata> getAutomatonList() {
 		
 		parseFiles(".jff");		
 		return automatonList;

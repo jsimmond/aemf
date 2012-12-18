@@ -1,12 +1,10 @@
 package cl.utfsm.aemf.token;
 
-import cl.utfsm.aemf.manager.BehaviorManager;
 
 public class ActivityTextTokenizer extends TextTokenizer {
 
 	@Override
-	public boolean isAccepted() {
-		Token t = BehaviorManager.getTokenById("activity");
+	public boolean isAccepted(Token t) {
 		for(String s : t.getValuesAcceptedList()){
 			if(eventText.contains(s))
 			{
@@ -29,13 +27,11 @@ public class ActivityTextTokenizer extends TextTokenizer {
 
 	@Override
 	public int getCurrentState() {
-		// TODO Auto-generated method stub
 		return CURRENT_STATE;
 	}
 
 	@Override
 	public String getValueMatched() {
-		// TODO Auto-generated method stub
 		return valueMatched;
 	}
 

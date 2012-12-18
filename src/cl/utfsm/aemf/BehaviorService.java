@@ -41,8 +41,9 @@ public class BehaviorService extends IntentService {
 		Util.getProcessId(AEMFConfiguration.APPLICATION_ID_TO_BE_MONITORED);
 		
 		// opens a stream to AEMF log file
-		AEMFLogger.openNewStream(AEMFConfiguration.AEMF_SOURCE_FILES_DIRECTORY + "log.txt");
+		AEMFLogger.openNewStream(AEMFConfiguration.AEMF_SOURCE_FILES_DIRECTORY + AEMFConfiguration.LOG_FILE_NAME);
 		AEMFLogger.writeInfo("Starting new session of AEMF");
+		AEMFLogger.writeInfo("=> Monitoring application " + AEMFConfiguration.APPLICATION_ID_TO_BE_MONITORED);
 		/*
 		 * First of all, we need the read the configurations file,
 		 * it can be done by the BehaviorFile class
@@ -61,10 +62,12 @@ public class BehaviorService extends IntentService {
 			BehaviorManager.symbolList 	  = af.getSymbolList();
 			BehaviorManager.tokenList 	  = tf.getTokenList();
 			
-			AEMFLogger.write("There are " + BehaviorManager.automatonList.size() + " automatons to be monitored");
+			AEMFLogger.write("There are " + BehaviorManager.automatonList.size() + " automata/on to be monitored");
 			
 		} catch (Exception e) {
+			AEMFLogger.write("There was a problem reading the files...");
 			e.printStackTrace();
+			System.exit(0);
 		}
 
 		// First thread, define a Thread that reads the logs
@@ -73,12 +76,6 @@ public class BehaviorService extends IntentService {
 		// The thread will executes this task
 		listenerThread.start();
 		AEMFLogger.write("Listener service started");
-		
-		// ... until the service will be destroyed
-		AEMFLogger.write("Stopped instance of AEMF, service destroyed.");
-		
-		
-
 	}
 
 	@Override

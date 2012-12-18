@@ -30,10 +30,8 @@ public class AEMFLogger {
         try {
         	file.createNewFile();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -58,7 +56,6 @@ public class AEMFLogger {
 			output.write((timestamp + stringToWrite + "\n").getBytes());
 			output.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -82,7 +79,6 @@ public class AEMFLogger {
 			output.write(("" + timestamp + stringToWrite + "\n").getBytes());
 			output.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

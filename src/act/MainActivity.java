@@ -2,10 +2,11 @@ package act;
 
 import cl.utfsm.aemf.BehaviorListener;
 import cl.utfsm.aemf.BehaviorService;
-import cl.utfsm.aemf.automaton.Automaton;
-import cl.utfsm.aemf.automaton.Symbol;
-import cl.utfsm.aemf.event.AutomatonEvent;
-import cl.utfsm.aemf.event.AutomatonListener;
+import cl.utfsm.aemf.automata.Automata;
+import cl.utfsm.aemf.automata.Symbol;
+import cl.utfsm.aemf.automata.TransitionConfiguration;
+import cl.utfsm.aemf.event.AutomataEvent;
+import cl.utfsm.aemf.event.AutomataListener;
 import cl.utfsm.aemf.manager.BehaviorManager;
 import cl.utfsm.aemf.textevent.TextEvent;
 import cl.utfsm.aemf.util.AEMFConfiguration;
@@ -21,7 +22,7 @@ import android.widget.ToggleButton;
 
 public class MainActivity extends Activity {
 
-	@Override
+	@Override 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
@@ -44,30 +45,32 @@ public class MainActivity extends Activity {
 		AEMFConfiguration.APPLICATION_ID_TO_BE_MONITORED = "cl.vasquez.MainPackage";
 		AEMFConfiguration.AEMF_SOURCE_FILES_DIRECTORY 
 						= Environment.getExternalStorageDirectory().getAbsolutePath() + "/AEMF_files/";	//points to /mnt/sdcard/AEMF_files/
+		AEMFConfiguration.LOG_FILE_NAME = "log.txt";
 		
 		//2 Iniciar servicio listener
 		Intent intent = new Intent(this, BehaviorService.class);
-		
 		startService(intent);
 		
 		//3 Suscribirse a los eventos
 		BehaviorManager bm = new BehaviorManager();
-		bm.addAutomatonChangeStateEventListener(new AutomatonListener() {
+		bm.addAutomatonChangeStateEventListener(new AutomataListener() {
 			
 			@Override
-			public void handleAutomatonEvent(AutomatonEvent e) {
+			public void handleAutomatonEvent(AutomataEvent e) {
 				
 				// The automaton affected by a change
-				Automaton a = e.getAutomaton();
+				Automata a = e.getAutomaton();
 				TextEvent t = e.getTextEvent();
 				Symbol s = e.getSymbol();
+				TransitionConfiguration p = e.getParameters();
 				
 				/**
 				 * Do anything you want with your automatons!
 				 */
-				a.printAutomaton();
-				t.printEvent();
-				s.printSymbol();
+				if(a.isFinished())
+					System.out.println("El automata "+a.getId()+" (" + a.getFileName() + ") ha terminado llegando al estado " + a.getCurrentState().getId());
+				else
+					System.out.println("Automata " + a.getId() + " ha cambiado de estado a " + a.getCurrentState().getId() + " gracias a " + s.getId());
 				
 			}
 		});

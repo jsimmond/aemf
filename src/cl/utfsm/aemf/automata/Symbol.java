@@ -1,4 +1,4 @@
-package cl.utfsm.aemf.automaton;
+package cl.utfsm.aemf.automata;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,6 @@ public class Symbol {
 	 */
 	public Symbol(){
 		params = new ArrayList<String>();
-
 	}
 	
 	/*

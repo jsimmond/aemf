@@ -29,6 +29,7 @@ import android.os.Environment;
 	public static String APPLICATION_ID_TO_BE_MONITORED = "cl.vasquez.MainPackage";
 	public static int PROCESS_ID_TO_BE_MONITORED = 0;
 	public static int APPLICATION_PID_MONITORED = -1;
+	public static String LOG_FILE_NAME = "log.txt";
 	
 
 

@@ -9,7 +9,6 @@ public class ProcessIdTextTokenizer extends TextTokenizer {
 
 	@Override
 	public int getCurrentState() {
-		// TODO Auto-generated method stub
 		return CURRENT_STATE;
 	}
 
@@ -17,7 +16,7 @@ public class ProcessIdTextTokenizer extends TextTokenizer {
 	 * Verify if the eventText matches on this ApplicationToken
 	 */
 	@Override
-	public boolean isAccepted() {
+	public boolean isAccepted(Token t) {
 		try {
 			Integer.parseInt(eventText);
 			valueMatched = eventText;
@@ -32,7 +31,6 @@ public class ProcessIdTextTokenizer extends TextTokenizer {
 
 	@Override
 	public String getValueMatched() {
-		// TODO Auto-generated method stub
 		return valueMatched;
 	}
 

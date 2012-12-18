@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cl.utfsm.aemf.automaton.Symbol;
-import cl.utfsm.aemf.automaton.TransitionConfiguration;
-import cl.utfsm.aemf.logger.AEMFLogger;
+import cl.utfsm.aemf.automata.Symbol;
+import cl.utfsm.aemf.automata.TransitionConfiguration;
 import cl.utfsm.aemf.token.BadTokenException;
 import cl.utfsm.aemf.token.DummyTextTokenizer;
 import cl.utfsm.aemf.token.ProcessIdTextTokenizer;
@@ -30,9 +29,7 @@ public class Inspector {
 	 * @throws Exception
 	 */
 	public static TransitionConfiguration getTransitionFromEvent(String eventText, Symbol symbol) throws BadTokenException{
-		
-		AEMFLogger.writeInfo("TransitionConfiguration getTransitionFromEvent: " + symbol.getId());
-		
+				
 		// This object will be filled with data
 		// while the string analysis is performed.
 		// This data will help to make the correspondent 
@@ -61,7 +58,6 @@ public class Inspector {
 			// eventArray[j]  is a string
 			if(isToken(symbolArray[j]))
 			{
-				
 				withToken = true;
 				ArrayList<String> list = getTokens(symbolArray[j]);
 				for(String token : list){
@@ -79,7 +75,7 @@ public class Inspector {
 							break;
 						}
 						// token is accepted by the automaton?
-						else if(tokenManager.isAccepted())
+						else if(tokenManager.isAccepted(BehaviorManager.getTokenById(token)))
 						{
 							if(tokenManager instanceof ProcessIdTextTokenizer){
 								usingDummyToken = false;

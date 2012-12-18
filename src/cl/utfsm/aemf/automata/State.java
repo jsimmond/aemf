@@ -1,4 +1,4 @@
-package cl.utfsm.aemf.automaton;
+package cl.utfsm.aemf.automata;
 
 import java.util.ArrayList;
 
@@ -10,11 +10,9 @@ import java.util.ArrayList;
  */
 public class State {
 
-	
-
-	private int id;						// Some ID to identify this state
-	private String label;				// 
-	private String name;				//
+	private int id;						
+	private String label;				 
+	private String name;				
 	private int stateType;				//initial, intermediate or final state
 	private ArrayList<Transition> transitions = new ArrayList<Transition>();
 	
@@ -34,7 +32,6 @@ public class State {
 	
 	
 	public void addTransition(Transition transition) {
-		// TODO Auto-generated method stub
 		this.transitions.add(transition);
 	}
 	
@@ -104,12 +101,6 @@ public class State {
 	 */
 	public void setStateType(int stateType) {
 		this.stateType = stateType;
-		
-	}
-
-
-	public void processParameters(TransitionConfiguration parameters) {
-		// TODO Auto-generated method stub
 		
 	}
 	

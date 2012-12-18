@@ -1,7 +1,8 @@
-package cl.utfsm.aemf.automaton;
+package cl.utfsm.aemf.automata;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class TransitionConfiguration {
 
@@ -54,12 +55,33 @@ public class TransitionConfiguration {
 	}
 
 	public void setPID(int pid) {
-		// TODO Auto-generated method stub
 		this.PID = pid;
 	}
 	
 	public int getPID(){
 		return PID;
+	}
+	
+	/**
+	 * Gets a parameter given its index
+	 * @param index
+	 * @return String[]
+	 */
+	public String getFormatParametersString(){
+		String res = "";
+		
+		for(Entry<String, ArrayList<String>> entry : this.hp.entrySet()){
+			
+			if(entry.getKey().equals("activity") || entry.getKey().equals("application")) {
+				for(String val : entry.getValue()){
+					res += entry.getKey() + ":" +  val;
+				}		
+				res += ", ";	
+			}
+			
+		}
+		
+		return res.substring(0, res.length()-2);
 	}
 	
 	

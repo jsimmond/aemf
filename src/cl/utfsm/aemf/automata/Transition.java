@@ -1,4 +1,4 @@
-package cl.utfsm.aemf.automaton;
+package cl.utfsm.aemf.automata;
 
 import java.util.ArrayList;
 import java.util.HashMap;

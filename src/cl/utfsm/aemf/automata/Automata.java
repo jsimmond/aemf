@@ -1,4 +1,4 @@
-package cl.utfsm.aemf.automaton;
+package cl.utfsm.aemf.automata;
 
 import java.util.ArrayList;
 import java.util.Map.Entry;
@@ -11,16 +11,13 @@ import cl.utfsm.aemf.logger.AEMFLogger;
  * @author Sebastián Vásquez Morales
  *
  */
-public class Automaton {
+public class Automata {
 
 	private int id;
 	private String fileName;
 	private State currentState;
 	private ArrayList<State> states = new ArrayList<State>();
-	
-	
-	
-	
+
 	
 	/**
 	 * Process the event given and change the actual state if the event is accepted as a transition
@@ -29,13 +26,13 @@ public class Automaton {
 	public boolean processTransitionParameters(TransitionConfiguration parameters) {
 		
 		
-		AEMFLogger.write("Current state of the automaton "+currentState.getId()+": " + currentState.getName());
+		AEMFLogger.write("Current state of the Automata "+currentState.getId()+": " + currentState.getName());
 		// For each transition, verify his configuration
 		for(Transition t : currentState.getTransitions()){
 			State nextState;
 			if((nextState = t.getNextStateGivenConfiguration(parameters)) != null){
 							
-				AEMFLogger.write("Automaton " + getId() + " ("+getFileName()+") changed to state from " +currentState.getId()+" to "+nextState.getId() );
+				AEMFLogger.write("Automata " + getId() + " ("+getFileName()+") change state from " +currentState.getId()+" to "+nextState.getId() );
 				
 				// Change the current state to next
 				currentState = nextState;

@@ -12,6 +12,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import android.util.Log;
 
+import cl.utfsm.aemf.logger.AEMFLogger;
 import cl.utfsm.aemf.util.AEMFConfiguration;
 
 public abstract class AEMFFile {
@@ -49,6 +50,7 @@ public abstract class AEMFFile {
 		File files[] = new File(AEMFConfiguration.AEMF_SOURCE_FILES_DIRECTORY + path).listFiles();
 		
 		Log.i(AEMFConfiguration.APPLICATION_TAG, "Starting reading files, "+files.length+" file(s) found.");
+		boolean filesFound = false;
 		for(File f : files)
 		{
 			if(!f.getName().contains(allowedExtension))
@@ -59,6 +61,7 @@ public abstract class AEMFFile {
 				AEMFFile.AUTOMATON_FILENAME = f.getName();
 				parseFile(f);
 				AEMFFile.AUTOMATON_ID++;
+				filesFound = true;
 				
 			} catch (ParserConfigurationException e) {
 				e.printStackTrace();
@@ -67,6 +70,13 @@ public abstract class AEMFFile {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		// If no files found
+		if(!filesFound) {
+			Log.i(AEMFConfiguration.APPLICATION_TAG, "No .JFF Files...");
+			AEMFLogger.writeInfo("No "+allowedExtension+" Files to read, process finished.");
+			System.exit(0);
 		}
 	}
 	

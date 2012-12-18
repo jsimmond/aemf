@@ -2,8 +2,9 @@ package cl.utfsm.aemf.event;
 
 import java.util.EventObject;
 
-import cl.utfsm.aemf.automaton.Automaton;
-import cl.utfsm.aemf.automaton.Symbol;
+import cl.utfsm.aemf.automata.Automata;
+import cl.utfsm.aemf.automata.Symbol;
+import cl.utfsm.aemf.automata.TransitionConfiguration;
 import cl.utfsm.aemf.textevent.TextEvent;
 
 /**
@@ -14,28 +15,30 @@ import cl.utfsm.aemf.textevent.TextEvent;
  */
 
 @SuppressWarnings("serial")
-public class AutomatonEvent extends EventObject{
+public class AutomataEvent extends EventObject{
 
 	
-	private Automaton automaton;
+	private Automata automaton;
 	private TextEvent textEvent;
 	private Symbol symbol;
+	private TransitionConfiguration parameters;
 
 	/**
 	 * Constructor
 	 * @param source
 	 */
-	public AutomatonEvent(Automaton automaton, TextEvent textEvent, Symbol sym) {
+	public AutomataEvent(Automata automaton, TextEvent textEvent, Symbol sym, TransitionConfiguration params) {
 		super("");
 		this.automaton = automaton;
 		this.textEvent = textEvent;
 		this.symbol = sym;
+		this.parameters = params;
 	}
 
 	/*
 	 * Getters
 	 */
-	public Automaton getAutomaton() {
+	public Automata getAutomaton() {
 		return automaton;
 	}
 	
@@ -45,6 +48,10 @@ public class AutomatonEvent extends EventObject{
 	
 	public Symbol getSymbol() {
 		return symbol;
+	}
+	
+	public TransitionConfiguration getParameters(){
+		return this.parameters;
 	}
 
 

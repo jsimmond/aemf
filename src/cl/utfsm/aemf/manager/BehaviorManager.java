@@ -5,11 +5,11 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import cl.utfsm.aemf.automaton.Automaton;
-import cl.utfsm.aemf.automaton.Symbol;
-import cl.utfsm.aemf.automaton.TransitionConfiguration;
-import cl.utfsm.aemf.event.AutomatonEvent;
-import cl.utfsm.aemf.event.AutomatonListener;
+import cl.utfsm.aemf.automata.Automata;
+import cl.utfsm.aemf.automata.Symbol;
+import cl.utfsm.aemf.automata.TransitionConfiguration;
+import cl.utfsm.aemf.event.AutomataEvent;
+import cl.utfsm.aemf.event.AutomataListener;
 import cl.utfsm.aemf.logger.AEMFLogger;
 import cl.utfsm.aemf.textevent.TextEvent;
 import cl.utfsm.aemf.token.BadTokenException;
@@ -24,10 +24,10 @@ public class BehaviorManager {
 
 
 	// Listeners
-	private static ArrayList<AutomatonListener> _listeners = new ArrayList<AutomatonListener>();
+	private static ArrayList<AutomataListener> _listeners = new ArrayList<AutomataListener>();
 	
 
-	public static ArrayList<Automaton> automatonList = new ArrayList<Automaton>();	// All the automatons to manage
+	public static ArrayList<Automata> automatonList = new ArrayList<Automata>();	// All the automatons to manage
 	public static ArrayList<Symbol> symbolList 		 = new ArrayList<Symbol>();		// Alphabet to compare
 	public static ArrayList<Token> tokenList 		 = new ArrayList<Token>();		// Tokens of alphabet to compare
 	
@@ -62,16 +62,16 @@ public class BehaviorManager {
 		
 		if(parameters != null){
 			// Verify if the transition is possible
-			for(Automaton automaton : automatonList)
+			for(Automata automaton : automatonList)
 			{
-				AEMFLogger.write("Processing event " + sym.getId() + " on automaton " + automaton.getId() + " ("+automaton.getFileName()+")");
+				AEMFLogger.write("Processing event " + sym.getId() + "("+ parameters.getFormatParametersString() +") on Automata " + automaton.getId() + " ("+automaton.getFileName()+")");
 				automaton.processTransitionParameters(parameters);
 				
 				// Fire event!
-				fireChangeStateEvent(automaton, event, sym);
+				fireChangeStateEvent(automaton, event, sym, parameters);
 				
 				if(automaton.isFinished()){
-					AEMFLogger.write("Automaton " + automaton.getId() + "Finish on state " + automaton.getCurrentState().getId());
+					AEMFLogger.write("Automata " + automaton.getId() + " Finished on state " + automaton.getCurrentState().getId());
 					return true;
 				}
 					
@@ -154,21 +154,19 @@ public class BehaviorManager {
 	/*
 	 * Getters and setters
 	 */
-	public static ArrayList<Automaton> getAutomatonList() {
+	public static ArrayList<Automata> getAutomatonList() {
 		return automatonList;
 	}
 
-	public static void setAutomatonList(ArrayList<Automaton> automatonList) {
+	public static void setAutomatonList(ArrayList<Automata> automatonList) {
 		BehaviorManager.automatonList = automatonList;
 	}
 
-	public static void addAutomaton(Automaton a) {
-		// TODO Auto-generated method stub
+	public static void addAutomaton(Automata a) {
 		BehaviorManager.automatonList.add(a);
 	}
 	
 	public static void addSymbol(Symbol s) {
-		// TODO Auto-generated method stub
 		BehaviorManager.symbolList.add(s);
 	}
 
@@ -180,7 +178,7 @@ public class BehaviorManager {
 	 * Add a new event listener
 	 * @param listener
 	 */
-	public synchronized void addAutomatonChangeStateEventListener(AutomatonListener listener)  {
+	public synchronized void addAutomatonChangeStateEventListener(AutomataListener listener)  {
 		 _listeners.add(listener);
 	}
 	
@@ -188,13 +186,13 @@ public class BehaviorManager {
 	/**
 	 * Call this method whenever you want to notify
 	 * the event listeners of the particular event
-	 * @param an automaton
+	 * @param Automata, TextEvent, Symbol
 	 */
-	private synchronized static void fireChangeStateEvent(Automaton a, TextEvent t, Symbol s) {
-		AutomatonEvent event = new AutomatonEvent(a, t, s);
-		Iterator<AutomatonListener> i = _listeners.iterator();
+	private synchronized static void fireChangeStateEvent(Automata a, TextEvent t, Symbol s, TransitionConfiguration p) {
+		AutomataEvent event = new AutomataEvent(a, t, s, p);
+		Iterator<AutomataListener> i = _listeners.iterator();
 		while(i.hasNext())  {
-	      ((AutomatonListener) i.next()).handleAutomatonEvent(event);
+	      ((AutomataListener) i.next()).handleAutomatonEvent(event);
 	    }
 	}
 

@@ -7,7 +7,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import cl.utfsm.aemf.automaton.Symbol;
+import cl.utfsm.aemf.automata.Symbol;
 
 
 /**

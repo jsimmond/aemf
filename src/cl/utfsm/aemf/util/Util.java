@@ -33,7 +33,7 @@ public class Util {
 					}
 				}
 			} catch (Exception e) {
-				AEMFConfiguration.APPLICATION_PID_MONITORED = -1;
+				System.exit(0);
 			}
 		
 

@@ -10,7 +10,7 @@ public abstract class TextTokenizer {
 	public static final int MATCH_FOUND 	= 1;
 	public static final int MATCH_NOT_FOUND = 2;
 	
-	public abstract boolean isAccepted();
+	public abstract boolean isAccepted(Token t);
 	public abstract void setEventText(String string);
 	public abstract int getCurrentState();
 	

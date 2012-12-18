@@ -5,6 +5,6 @@ package cl.utfsm.aemf.event;
  * @author Sebastián Vásquez Morales
  *
  */
-public interface AutomatonListener {
-	public void handleAutomatonEvent(AutomatonEvent e);
+public interface AutomataListener {
+	public void handleAutomatonEvent(AutomataEvent e);
 }

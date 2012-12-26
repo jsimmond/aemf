@@ -58,7 +58,7 @@ public class BehaviorService extends IntentService {
 			bf = new BehaviorFile("");
 			af = new AlphabetFile("");
 			tf = new TokenFile("");
-			BehaviorManager.automatonList = bf.getAutomatonList();
+			BehaviorManager.automatonList = bf.getAutomataList();
 			BehaviorManager.symbolList 	  = af.getSymbolList();
 			BehaviorManager.tokenList 	  = tf.getTokenList();
 			

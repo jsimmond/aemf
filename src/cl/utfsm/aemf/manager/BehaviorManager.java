@@ -32,7 +32,7 @@ public class BehaviorManager {
 	public static ArrayList<Token> tokenList 		 = new ArrayList<Token>();		// Tokens of alphabet to compare
 	
 	/**
-	 * Compare the event consumed and the actual state of each automaton  
+	 * Compare the event consumed and the actual state of each automata
 	 * @param event
 	 * @throws BadTokenException 
 	 */
@@ -62,16 +62,16 @@ public class BehaviorManager {
 		
 		if(parameters != null){
 			// Verify if the transition is possible
-			for(Automata automaton : automatonList)
+			for(Automata automata : automatonList)
 			{
-				AEMFLogger.write("Processing event " + sym.getId() + "("+ parameters.getFormatParametersString() +") on Automata " + automaton.getId() + " ("+automaton.getFileName()+")");
-				automaton.processTransitionParameters(parameters);
+				AEMFLogger.write("Processing event " + sym.getId() + "("+ parameters.getFormatParametersString() +") on Automata " + automata.getId() + " ("+automata.getFileName()+")");
+				automata.processTransitionParameters(parameters);
 				
 				// Fire event!
-				fireChangeStateEvent(automaton, event, sym, parameters);
+				fireChangeStateEvent(automata, event, sym, parameters);
 				
-				if(automaton.isFinished()){
-					AEMFLogger.write("Automata " + automaton.getId() + " Finished on state " + automaton.getCurrentState().getId());
+				if(automata.isFinished()){
+					AEMFLogger.write("Automata " + automata.getId() + " Finished on state " + automata.getCurrentState().getId());
 					return true;
 				}
 					
@@ -178,7 +178,7 @@ public class BehaviorManager {
 	 * Add a new event listener
 	 * @param listener
 	 */
-	public synchronized void addAutomatonChangeStateEventListener(AutomataListener listener)  {
+	public synchronized void addAutomataChangeStateEventListener(AutomataListener listener)  {
 		 _listeners.add(listener);
 	}
 	
@@ -192,7 +192,7 @@ public class BehaviorManager {
 		AutomataEvent event = new AutomataEvent(a, t, s, p);
 		Iterator<AutomataListener> i = _listeners.iterator();
 		while(i.hasNext())  {
-	      ((AutomataListener) i.next()).handleAutomatonEvent(event);
+	      ((AutomataListener) i.next()).handleAutomataEvent(event);
 	    }
 	}
 

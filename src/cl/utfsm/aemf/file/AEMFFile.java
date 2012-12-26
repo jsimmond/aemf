@@ -21,10 +21,10 @@ public abstract class AEMFFile {
 	private String path;
 	private DefaultHandler documentHandler;
 	
-	// Quantity of automatons monitoring 
-	public static int AUTOMATON_ID = 0;
-	// Quantity of automatons monitoring 
-	public static String AUTOMATON_FILENAME = "";
+	// Quantity of automaton monitoring 
+	public static int AUTOMATA_ID = 0;
+	// Quantity of automaton monitoring 
+	public static String AUTOMATA_FILENAME = "";
 	
 	/**
 	 * Constructor
@@ -58,9 +58,9 @@ public abstract class AEMFFile {
 			
 			Log.i(AEMFConfiguration.APPLICATION_TAG, "Reading " + f.getName());
 			try {
-				AEMFFile.AUTOMATON_FILENAME = f.getName();
+				AEMFFile.AUTOMATA_FILENAME = f.getName();
 				parseFile(f);
-				AEMFFile.AUTOMATON_ID++;
+				AEMFFile.AUTOMATA_ID++;
 				filesFound = true;
 				
 			} catch (ParserConfigurationException e) {
@@ -82,7 +82,7 @@ public abstract class AEMFFile {
 	
 	
 	/**
-	 * Reads one .jff file and generates the respect BehaviorAutomaton object
+	 * Reads one .jff file and generates the respect BehaviorAutomata object
 	 * @param f
 	 * @throws ParserConfigurationException
 	 * @throws SAXException

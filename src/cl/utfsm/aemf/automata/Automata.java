@@ -64,7 +64,7 @@ public class Automata {
 	
 
 	/**
-	 * Verify is the automaton is in a final state
+	 * Verify if the automata is in a final state
 	 * @return
 	 */
 	public boolean isFinished() {
@@ -72,7 +72,7 @@ public class Automata {
 	}
 
 	/**
-	 * Add a new state to this automaton
+	 * Add a new state to this automata
 	 * @param state
 	 */
 	public void addState(State state) {
@@ -87,7 +87,7 @@ public class Automata {
 	}
 	
 	// For debbuging
-	public void printAutomaton()
+	public void printAutomata()
 	{
 		for(State state : states){
 			System.out.println("State " + state.getId() + "(type:"+state.getStateType()+"):");

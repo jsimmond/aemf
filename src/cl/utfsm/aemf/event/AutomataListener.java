@@ -6,5 +6,5 @@ package cl.utfsm.aemf.event;
  *
  */
 public interface AutomataListener {
-	public void handleAutomatonEvent(AutomataEvent e);
+	public void handleAutomataEvent(AutomataEvent e);
 }

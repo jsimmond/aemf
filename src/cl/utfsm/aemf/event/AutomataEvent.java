@@ -9,7 +9,7 @@ import cl.utfsm.aemf.textevent.TextEvent;
 
 /**
  * This is the main event fired by the BehaviorManager class, it stores information
- * about the automaton affected by an event
+ * about the automata affected by an event
  * @author Sebastián Vásquez Morales
  *
  */
@@ -18,7 +18,7 @@ import cl.utfsm.aemf.textevent.TextEvent;
 public class AutomataEvent extends EventObject{
 
 	
-	private Automata automaton;
+	private Automata automata;
 	private TextEvent textEvent;
 	private Symbol symbol;
 	private TransitionConfiguration parameters;
@@ -27,9 +27,9 @@ public class AutomataEvent extends EventObject{
 	 * Constructor
 	 * @param source
 	 */
-	public AutomataEvent(Automata automaton, TextEvent textEvent, Symbol sym, TransitionConfiguration params) {
+	public AutomataEvent(Automata automata, TextEvent textEvent, Symbol sym, TransitionConfiguration params) {
 		super("");
-		this.automaton = automaton;
+		this.automata = automata;
 		this.textEvent = textEvent;
 		this.symbol = sym;
 		this.parameters = params;
@@ -38,8 +38,8 @@ public class AutomataEvent extends EventObject{
 	/*
 	 * Getters
 	 */
-	public Automata getAutomaton() {
-		return automaton;
+	public Automata getAutomata() {
+		return automata;
 	}
 	
 	public TextEvent getTextEvent() {

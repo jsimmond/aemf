@@ -53,19 +53,19 @@ public class MainActivity extends Activity {
 		
 		//3 Suscribirse a los eventos
 		BehaviorManager bm = new BehaviorManager();
-		bm.addAutomatonChangeStateEventListener(new AutomataListener() {
+		bm.addAutomataChangeStateEventListener(new AutomataListener() {
 			
 			@Override
-			public void handleAutomatonEvent(AutomataEvent e) {
+			public void handleAutomataEvent(AutomataEvent e) {
 				
-				// The automaton affected by a change
-				Automata a = e.getAutomaton();
+				// The automata affected by a change
+				Automata a = e.getAutomata();
 				TextEvent t = e.getTextEvent();
 				Symbol s = e.getSymbol();
 				TransitionConfiguration p = e.getParameters();
 				
 				/**
-				 * Do anything you want with your automatons!
+				 * Do anything you want with your automaton!
 				 */
 				if(a.isFinished())
 					System.out.println("El automata "+a.getId()+" (" + a.getFileName() + ") ha terminado llegando al estado " + a.getCurrentState().getId());

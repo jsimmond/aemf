@@ -44,7 +44,7 @@ public class BehaviorFile extends AEMFFile {
 		// Implements a generic DefaultHandler to handle (doh!) the file reading
 		setDocumentHandler(new DefaultHandler()
 		{ 
-			Automata automaton;
+			Automata automata;
 			State state;
 			Transition transition;
 			
@@ -59,8 +59,8 @@ public class BehaviorFile extends AEMFFile {
 			boolean readRead  = false;
 			
 			public void startDocument(){
-				// before start to reading the .jff file, create a new void automaton object
-				automaton = new Automata();
+				// before start to reading the .jff file, create a new void automata object
+				automata = new Automata();
 			}
 			
 			// Receive notification of the start of an element
@@ -144,7 +144,7 @@ public class BehaviorFile extends AEMFFile {
 					
 					else if(readTo) {
 						int index = Integer.parseInt(new String(ch, start, length));
-						State newState = automaton.getStates().get(index);
+						State newState = automata.getStates().get(index);
 						transition.setToState(newState);
 						readTo = false;
 					}
@@ -168,34 +168,34 @@ public class BehaviorFile extends AEMFFile {
 					if(state.getStateType() != State.INITIAL_STATE && state.getStateType() != State.FINAL_STATE)
 						state.setStateType(State.INTERMEDIATE_STATE);
 					
-					//Add this state to the new automaton 
-					automaton.addState(state);
+					//Add this state to the new automata
+					automata.addState(state);
 				}
 				if(qName.equalsIgnoreCase("transition")) {
 					// End Reading a state
-					automaton.getStates().get(transition.getFromState()).addTransition(transition);
+					automata.getStates().get(transition.getFromState()).addTransition(transition);
 					readTransition = false;
 				}
 			}
 			
 			public void endDocument(){
-				// Add the automaton
-				automaton.setInitialState();
+				// Add the automata
+				automata.setInitialState();
 				
-				automaton.setId(AEMFFile.AUTOMATON_ID);
-				automaton.setFileName(AEMFFile.AUTOMATON_FILENAME);
+				automata.setId(AEMFFile.AUTOMATA_ID);
+				automata.setFileName(AEMFFile.AUTOMATA_FILENAME);
 				
-				automatonList.add(automaton);
+				automatonList.add(automata);
 			}
 			
 		});
 	}
 
 	/**
-	 * Returns the generated automaton read from source_path file
+	 * Returns the generated automata read from source_path file
 	 * @return automaton list
 	 */
-	public ArrayList<Automata> getAutomatonList() {
+	public ArrayList<Automata> getAutomataList() {
 		
 		parseFiles(".jff");		
 		return automatonList;

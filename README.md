@@ -1,9 +1,6 @@
-Android Event Monitoring Framework (AEMF)
-=========================================
-
-Version 1.0
+#Android Event Monitoring Framework (AEMF)
+##Version 1.0
 ___________
-
 
 The AEMF Framework is an application development Framework for Android devices that allow it to monitoring 
 behavior applications according to the actions produced by them.
@@ -31,5 +28,3 @@ The automaton, needs 3 types of states:
 Each Final State from the automata describe a non expecting behavior state (such a send SMS from a game without user permission).
 
 
-
-For each action readed, 

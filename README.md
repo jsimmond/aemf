@@ -1,4 +1,6 @@
-AEM Framework
+AEMF Framework
+==============
+
 ###Version 1.0
 
 ## Brief

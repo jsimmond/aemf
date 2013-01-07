@@ -34,7 +34,8 @@ Additionally, AEMF can write a log file which describes the monitoring process a
 AEMF is a .jar file which must to be imported on your dear Android IDE (such a Eclipse).
 
 ### 1 - Importing on IDE
-Under Eclipse IDE, you must to:
+First, you must download the AEMF_v1.0.jar file to your machine.
+Then, under Eclipse IDE, you must to:
  - Right click on your project
  - *Build Path > Java Build Path*
  - Press *Add External Jars*

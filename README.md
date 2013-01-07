@@ -2,7 +2,7 @@ Android Event Monitoring Framework (AEMF)
 =========================================
 
 Version 1.0
-:::::::::::::::::::
+___________
 
 
 The AEMF Framework is an application development Framework for Android devices that allow it to monitoring 

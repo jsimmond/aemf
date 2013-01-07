@@ -5,7 +5,7 @@
 *.png
 *.gif
 *.project
-*.jar
+*.jar !AEMF_*.jar
 *.apk
 *.cfg
 *.ap_

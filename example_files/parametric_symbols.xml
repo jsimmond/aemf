@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<transitions>
+
+	<transition>
+		<id>start_intent</id>
+		<params>
+			<!-- Start an intent to application... -->
+			<param>{%application%}</param> 
+		</params>
+		<name>Start an intent</name>
+		<level>I</level>
+		<tag>ActivityManager</tag>
+		<text>Starting: Intent { {%dummy%} cmp={%application%}/{%simple%} {%dummy%} } from pid {%process_id%}</text>
+		<description>This transition indicates that an process start an intent to an application.</description>
+	</transition>
+
+	<transition>
+		<id>display_activity</id>
+		<params>
+			<!-- Display an activity from application... -->
+			<param>{%application%}</param> 
+			<param>{%activity%}</param> 
+		</params>
+		<name>Display an activity</name>
+		<level>I</level>
+		<tag>ActivityManager</tag>
+		<text>Displayed {%application%}/{%activity%}: {%dummy%}</text>
+		<description>Display an activity from given application.</description>
+	</transition>
+
+	<transition>
+		<id>start_process_for_activity</id>
+		<params>
+			<!-- Start a process for application... -->
+			<param>{%application%}</param> 
+
+			<!-- from application... -->
+			<param>{%application%}</param> 
+
+			<!--  with activity ... -->
+			<param>{%activity%}</param>
+		</params>
+		<name>Start a process for an Activity</name>
+		<level>I</level>
+		<tag>ActivityManager</tag>
+		<text>Start proc {%application%} for activity {%application%}/{%activity%}: pid={%process_id%} {%dummy%}</text>
+		<description>Start a process with pid from the .</description>
+	</transition>
+
+	<transition>
+		<id>touch_press_screen</id>
+		<params>
+			<!-- Start a toch for application... -->
+			<param>{%application%}</param> 
+
+			<!--  with activity ... -->
+			<param>{%activity%}</param>
+		</params>
+		<name>Apply a touch on the screen</name>
+		<level>I</level>
+		<tag>InputDispatcher</tag>
+		<text>Delivering touch to current input target: action: 0, channel '{%dummy%} {%application%}/{%simple%} {%dummy%}'</text>
+		<description>Start a process with pid</description>
+	</transition>
+	<transition>
+		<id>touch_release_screen</id>
+		<params>
+			<!-- Release a toch for application... -->
+			<param>{%application%}</param> 
+
+			<!--  with activity ... -->
+			<param>{%activity%}</param>
+		</params>
+		<name>Release the touch on the screen</name>
+		<level>I</level>
+		<tag>InputDispatcher</tag>
+		<text>Delivering touch to current input target: action: 1, channel '{%dummy%} {%application%}/{%simple%} {%dummy%}'</text>
+		<description>Start a process with pid from the .</description>
+	</transition>
+	
+</transitions>

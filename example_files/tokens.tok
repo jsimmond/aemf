@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<tokens>
+	<token name="application" type="string">
+			<value>cl.vasquez.MainPackage</value>
+			<value>cl.utfsm.monitotingframework</value>
+			<value>com.opera.browser</value>
+			<value>com.android.browser</value>
+			<value>com.sec.android.app.camera</value>
+	</token>
+
+	<token name="activity" type="string">
+			<value>cl.vasquez.MainPackage.CuponListViewActivity</value>
+			<value>cl.vasquez.Utils.LoadingActivity</value>
+			<value>cl.vasquez.Settings.SettingsActivity</value>
+			<value>.BrowserActivity</value>
+			
+	</token>
+</tokens>
+

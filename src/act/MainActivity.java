@@ -55,7 +55,6 @@ public class MainActivity extends Activity {
 		BehaviorManager bm = new BehaviorManager();
 		bm.addAutomataChangeStateEventListener(new AutomataListener() {
 			
-			@Override
 			public void handleAutomataEvent(AutomataEvent e) {
 				
 				// The automata affected by a change

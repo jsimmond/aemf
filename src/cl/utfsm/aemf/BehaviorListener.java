@@ -19,7 +19,6 @@ public class BehaviorListener implements Runnable {
 	// Necessary synchronization token
 	private static boolean syncToken = false;
 	
-	@Override
 	public void run() {
 		
 		try {
